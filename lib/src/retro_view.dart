@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studio_core/core/strings.dart';
 import 'package:studio_core/app/arcade_stage.dart';
 import 'package:studio_core/app/game_api.dart';
 import 'package:studio_core/app/play_kit.dart';
@@ -20,7 +21,7 @@ const _names = [
   ['TUĞLA KIR', 'BRICKS'],
 ];
 
-void paintRetro(Canvas c, ArcadeSim sim, ArcadePalette p, double t) {
+void paintRetro(Canvas c, ArcadeSim sim, ArcadePalette p, double t, [String lang = 'en']) {
   final s = sim as RetroSim;
   const cell = 62.0;
   const left = 40.0, top = 210.0;
@@ -45,8 +46,7 @@ void paintRetro(Canvas c, ArcadeSim sim, ArcadePalette p, double t) {
   const sx = left + kW * cell + 40;
   final pw = kWorldW - sx - 18;
   final name = _names[s.game.index];
-  paintText(c, name[0], Offset(sx + pw / 2, top + 30), 40, Colors.white);
-  paintText(c, name[1], Offset(sx + pw / 2, top + 80), 26, Colors.white60);
+  paintText(c, Strings.tx(lang, name[0], name[1]), Offset(sx + pw / 2, top + 50), 40, Colors.white);
   paintText(c, '${s.score}', Offset(sx + pw / 2, top + 200), 52, const Color(0xFFFFE082));
   paintText(c, '♥' * s.lives, Offset(sx + pw / 2, top + 290), 40, const Color(0xFFEF9A9A));
   paintText(c, '◀', Offset(sx + pw / 2 - 60, top + kH * cell - 80), 70, Colors.white24);
@@ -63,7 +63,7 @@ Sfx? retroSound(ArcadeSim sim) => switch ((sim as RetroSim).lastEvent) {
 Widget buildRetroStage(PlayContext ctx, RetroLevel level) => ArcadeStage(
       ctx: ctx,
       create: () => RetroSim(level),
-      paint: paintRetro,
+      paint: (c, sim, p, t) => paintRetro(c, sim, p, t, ctx.lang),
       sound: retroSound,
       howTo: switch (level.game) {
         RetroGame.race => const [
