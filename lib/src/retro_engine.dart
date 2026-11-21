@@ -265,7 +265,7 @@ class RetroSim extends ArcadeSim {
     carGap--;
     if (carGap <= 0) {
       cars.add((r2.nextInt(2), -4));
-      carGap = 6 + r2.nextInt(4);
+      carGap = 9 + r2.nextInt(4); // iki araba arası en az 5 boş sıra: hep bir kaçış yolu var
     }
   }
 
