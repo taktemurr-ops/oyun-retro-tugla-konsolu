@@ -93,7 +93,7 @@ class RetroSim extends ArcadeSim {
         bdx = 1;
         bdy = -1;
         if (bricks.isEmpty) {
-          for (var y = 1; y < 6; y++) {
+          for (var y = 1; y < 5; y++) {
             for (var x = 0; x < kW; x++) {
               bricks.add(y * kW + x);
             }
@@ -346,8 +346,14 @@ class RetroSim extends ArcadeSim {
     if (ny == kH - 1) {
       if (nx >= padX - 1 && nx <= padX + 3) {
         bdy = -1;
-        if (nx <= padX) bdx = -1;
-        if (nx >= padX + 2) bdx = 1;
+        // Kenara çarpınca o yöne, ortaya çarpınca rastgele: top döngüye girmez.
+        if (nx <= padX - 1 || nx == padX) {
+          bdx = -1;
+        } else if (nx >= padX + 2) {
+          bdx = 1;
+        } else {
+          bdx = r2.chance(0.5) ? 1 : -1;
+        }
         lastEvent = 3;
         return;
       }
