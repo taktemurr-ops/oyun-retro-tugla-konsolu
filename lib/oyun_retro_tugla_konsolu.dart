@@ -82,7 +82,7 @@ final retroKonsolConfig = GameConfig(
       '4 trò cổ điển trên màn hình chấm',
       '4 klasiko sa dot na screen',
     ],
-  seedColor: const Color(0xFF689F38),
+  seedColor: const Color(0xFF5D7A48),
   icon: Icons.videogame_asset_rounded,
   rules: RetroRules(),
   buildPlay: (ctx) => buildRetroStage(ctx, (ctx.generated as GeneratedLevel<RetroLevel>).puzzle),
